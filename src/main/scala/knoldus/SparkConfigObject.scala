@@ -52,7 +52,8 @@ object SparkConfigObject extends App {
   /**Total number of match played by each team.
     */
   val matchesCount: DataFrame = matchDataSet.select("HomeTeam").withColumnRenamed("HomeTeam", "Team")
-    .union(matchDataSet.select("AwayTeam").withColumnRenamed("HomeTeam", "Team")).groupBy("Team").count()
+    .union(matchDataSet.select("AwayTeam").withColumnRenamed("AwayTeam", "Team")).groupBy("Team").count()
+    .withColumnRenamed("count", "TotalMatches")
   matchesCount.show(false)
 
   /**Top Ten team with highest wins.
